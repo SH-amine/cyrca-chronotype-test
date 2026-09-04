@@ -1,0 +1,892 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cyrca Chronotype Test</title>
+<meta name="description" content="Find your chronotype in 4 minutes — Lion, Bear, Wolf or Dolphin — and see the hours your biology reserved for deep work. The same assessment built into Cyrca.">
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cyrca">
+<meta property="og:title" content="What is your chronotype?">
+<meta property="og:description" content="Lion, Bear, Wolf or Dolphin? Take the 4-minute assessment and see the hours your biology reserved for your best work.">
+<meta property="og:image" content="og-image.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="500">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What is your chronotype?">
+<meta name="twitter:description" content="Lion, Bear, Wolf or Dolphin? Take the 4-minute assessment and see the hours your biology reserved for your best work.">
+<meta name="twitter:image" content="og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EDF0F6; --surface:#FFFFFF; --surface-2:#E4E9F3; --sunk:#DCE2EE;
+  --ink:#0B1020; --ink-2:#434F6D; --ink-3:#727E9B;
+  --line:#C9D2E3; --line-soft:#DBE2EF;
+  --accent:#A65E00; --accent-bright:#D07C0A; --accent-ink:#FFFFFF; --glow:rgba(166,94,0,.10);
+  --sleep:#312E81; --sleep-fill:rgba(49,46,129,.13);
+  --shadow:0 1px 2px rgba(11,16,32,.06), 0 12px 32px -12px rgba(11,16,32,.18);
+  --lion:#C4441C; --bear:#1C7F55; --wolf:#5B3FD4; --dolphin:#0C6E96;
+  --f-display:'Fraunces',Georgia,'Times New Roman',serif;
+  --f-body:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --wrap:1080px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0B1020; --surface:#141B2F; --surface-2:#1C2540; --sunk:#080C18;
+    --ink:#EEF2FA; --ink-2:#A6B2CC; --ink-3:#78859F;
+    --line:#25304C; --line-soft:#1B2338;
+    --accent:#F5A524; --accent-bright:#FFBB4D; --accent-ink:#170F02; --glow:rgba(245,165,36,.13);
+    --sleep:#8B87E8; --sleep-fill:rgba(76,72,168,.22);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 40px -16px rgba(0,0,0,.7);
+    --lion:#F97A50; --bear:#3FD69B; --wolf:#A98BFF; --dolphin:#4FC2ED;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0B1020; --surface:#141B2F; --surface-2:#1C2540; --sunk:#080C18;
+  --ink:#EEF2FA; --ink-2:#A6B2CC; --ink-3:#78859F;
+  --line:#25304C; --line-soft:#1B2338;
+  --accent:#F5A524; --accent-bright:#FFBB4D; --accent-ink:#170F02; --glow:rgba(245,165,36,.13);
+  --sleep:#8B87E8; --sleep-fill:rgba(76,72,168,.22);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 40px -16px rgba(0,0,0,.7);
+  --lion:#F97A50; --bear:#3FD69B; --wolf:#A98BFF; --dolphin:#4FC2ED;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--f-body); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:var(--f-display); font-variation-settings:'opsz' 60,'SOFT' 20,'WONK' 1; text-wrap:balance; margin:0; line-height:1.05; letter-spacing:-.015em}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent-bright); outline-offset:3px; border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important; transition-duration:.01ms !important}}
+
+.wrap{max-width:var(--wrap); margin:0 auto; padding:0 24px}
+.eyebrow{
+  font-family:var(--f-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ink-3); margin:0;
+}
+.mono{font-family:var(--f-mono); font-variant-numeric:tabular-nums}
+
+/* ---------- masthead ---------- */
+.masthead{
+  border-bottom:1px solid var(--line-soft);
+  position:sticky; top:0; z-index:20;
+  background:color-mix(in srgb, var(--ground) 88%, transparent);
+  backdrop-filter:blur(12px);
+}
+.masthead .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px; height:60px}
+.brand{display:flex; align-items:center; gap:10px; font-family:var(--f-display); font-variation-settings:'opsz' 20,'WONK' 1; font-weight:700; font-size:20px; letter-spacing:-.02em; text-decoration:none}
+.brand .dot{width:11px; height:11px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px var(--glow)}
+.masthead .mlink{font-size:13px; color:var(--ink-2); text-decoration:none; font-weight:500}
+.masthead .mlink:hover{color:var(--ink)}
+
+/* ---------- hero ---------- */
+.hero{padding:64px 0 12px}
+.hero-grid{display:grid; grid-template-columns:minmax(0,1fr); gap:36px}
+@media(min-width:900px){.hero-grid{grid-template-columns:minmax(0,1.02fr) minmax(0,1fr); gap:56px; align-items:center}}
+.hero h1{font-size:clamp(2.5rem,6.2vw,4.05rem); font-weight:600; margin:18px 0 0}
+.hero h1 em{font-style:italic; font-variation-settings:'opsz' 90,'SOFT' 40,'WONK' 1; color:var(--accent)}
+.hero .lede{margin-top:20px; font-size:1.075rem; color:var(--ink-2); max-width:60ch}
+.hero-cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:28px}
+
+.btn{
+  font-family:var(--f-body); font-size:15px; font-weight:600; letter-spacing:.01em;
+  border:1px solid transparent; border-radius:2px; padding:13px 22px; cursor:pointer;
+  text-decoration:none; display:inline-flex; align-items:center; gap:9px;
+  transition:transform .12s ease, background .16s ease, border-color .16s ease;
+}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--accent); color:var(--accent-ink)}
+.btn-primary:hover{background:var(--accent-bright)}
+.btn-ghost{background:transparent; color:var(--ink); border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--ink-3); background:var(--surface)}
+.btn-lg{padding:16px 28px; font-size:16px}
+.trust{font-size:12.5px; color:var(--ink-3); margin-top:14px; font-family:var(--f-mono); letter-spacing:.02em}
+
+/* ---------- day arc ---------- */
+.arcpanel{
+  background:var(--surface); border:1px solid var(--line-soft); border-radius:3px;
+  padding:22px 22px 18px; box-shadow:var(--shadow);
+}
+.arcpanel-head{display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:20px}
+.ruler{display:flex; justify-content:space-between; font-family:var(--f-mono); font-size:10px; color:var(--ink-3); letter-spacing:.06em; margin-left:var(--lbl,72px)}
+.arcrow{display:flex; align-items:center; gap:0; margin-top:10px}
+.arcrow .who{
+  width:var(--lbl,72px); flex:none; font-family:var(--f-mono); font-size:11px; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--ink-2); padding-right:10px;
+}
+.track{
+  position:relative; height:26px; flex:1; border-radius:2px;
+  background:var(--sleep-fill); overflow:hidden;
+  border:1px solid var(--line-soft);
+}
+.band{position:absolute; top:0; bottom:0; opacity:.28}
+.band.peak{opacity:1}
+.track.full .band{opacity:.92}
+.arcrow .peaktime{
+  width:112px; flex:none; text-align:right; font-family:var(--f-mono); font-size:11.5px;
+  color:var(--ink-2); padding-left:12px; font-variant-numeric:tabular-nums;
+}
+@media(max-width:640px){
+  .ruler{margin-left:56px} .arcrow .who{width:56px; font-size:10px}
+  .arcrow .peaktime{width:0; padding:0; overflow:hidden}
+}
+.arcnote{margin-top:18px; padding-top:14px; border-top:1px solid var(--line-soft); font-size:12.5px; color:var(--ink-3); display:flex; align-items:center; gap:8px}
+.arcnote .swatch{width:22px; height:9px; border-radius:1px; background:var(--accent); flex:none}
+
+/* ---------- types strip ---------- */
+.section{padding:72px 0 64px}
+.section-head{max-width:62ch; margin-bottom:36px}
+.section-head h2{font-size:clamp(1.7rem,3.4vw,2.4rem); font-weight:600; margin:12px 0 0}
+.section-head p{margin-top:14px; color:var(--ink-2)}
+.types{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1px; background:var(--line-soft); border:1px solid var(--line-soft)}
+.type{background:var(--surface); padding:24px 20px 22px; display:flex; flex-direction:column; gap:10px}
+.type .rail{width:34px; height:3px; border-radius:2px; background:var(--tc)}
+.type h3{font-size:1.32rem; font-weight:600; font-variation-settings:'opsz' 30,'WONK' 1}
+.type .sub{font-size:13.5px; color:var(--ink-2); flex:1}
+.type .stats{display:flex; flex-direction:column; gap:3px; font-family:var(--f-mono); font-size:11.5px; color:var(--ink-3); letter-spacing:.02em; padding-top:6px; border-top:1px dashed var(--line-soft)}
+.type .stats b{color:var(--ink-2); font-weight:500}
+
+/* ---------- quiz ---------- */
+#quiz,#types,#app{scroll-margin-top:76px}
+.card{
+  background:var(--surface); border:1px solid var(--line-soft); border-radius:3px;
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.card-pad{padding:clamp(26px,4vw,44px)}
+.progress{height:2px; background:var(--sunk)}
+.progress .fill{height:100%; background:var(--accent); width:0%; transition:width .3s cubic-bezier(.4,0,.2,1)}
+.qmeta{display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:22px}
+.qcat{font-family:var(--f-mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent)}
+.qnum{font-family:var(--f-mono); font-size:11px; color:var(--ink-3); font-variant-numeric:tabular-nums}
+.qtext{font-family:var(--f-display); font-variation-settings:'opsz' 40,'SOFT' 20,'WONK' 0; font-size:clamp(1.32rem,2.7vw,1.78rem); font-weight:500; line-height:1.28; letter-spacing:-.01em; text-wrap:balance}
+.opts{display:flex; flex-direction:column; gap:8px; margin-top:26px}
+.opt{
+  display:flex; align-items:center; gap:14px; width:100%; text-align:left;
+  font-family:var(--f-body); font-size:15px; color:var(--ink); line-height:1.45;
+  background:transparent; border:1px solid var(--line); border-radius:2px;
+  padding:15px 17px; cursor:pointer; transition:border-color .14s ease, background .14s ease;
+}
+.opt:hover{border-color:var(--accent); background:var(--glow)}
+.opt .key{
+  font-family:var(--f-mono); font-size:11px; color:var(--ink-3); flex:none;
+  width:22px; height:22px; border:1px solid var(--line); border-radius:50%;
+  display:grid; place-items:center; transition:inherit;
+}
+.opt:hover .key{border-color:var(--accent); color:var(--accent)}
+.opt.sel{border-color:var(--accent); background:var(--glow)}
+.opt.sel .key{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.qfoot{display:flex; justify-content:space-between; align-items:center; margin-top:24px; padding-top:18px; border-top:1px solid var(--line-soft)}
+.linkbtn{background:none; border:0; padding:0; font-family:var(--f-mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); cursor:pointer}
+.linkbtn:hover{color:var(--ink)}
+.linkbtn[disabled]{opacity:.35; cursor:default}
+.intro-title{font-size:clamp(1.8rem,3.6vw,2.5rem); font-weight:600; margin-bottom:14px}
+.intro-body{color:var(--ink-2); max-width:56ch; margin-bottom:26px}
+.steps{display:flex; flex-direction:column; gap:0; margin:26px 0 30px; border-top:1px solid var(--line-soft)}
+.step{display:flex; gap:16px; padding:14px 0; border-bottom:1px solid var(--line-soft); align-items:baseline}
+.step .n{font-family:var(--f-mono); font-size:11px; color:var(--ink-3); flex:none; width:26px}
+.step .t{font-weight:600; font-size:14.5px}
+.step .d{color:var(--ink-2); font-size:14px}
+
+/* ---------- result ---------- */
+.result-hero{padding:clamp(28px,4vw,46px); border-bottom:1px solid var(--line-soft); background:linear-gradient(180deg,var(--glow),transparent)}
+.result-hero .kicker{font-family:var(--f-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3)}
+.result-hero h2{font-size:clamp(2.7rem,8vw,4.6rem); font-weight:600; margin:10px 0 0; color:var(--tc); font-variation-settings:'opsz' 100,'SOFT' 30,'WONK' 1}
+.result-hero .sub{font-family:var(--f-display); font-style:italic; font-size:clamp(1.05rem,2.4vw,1.4rem); color:var(--ink-2); margin-top:4px}
+.result-hero .pop{margin-top:18px; display:inline-flex; align-items:center; gap:8px; font-family:var(--f-mono); font-size:11.5px; letter-spacing:.05em; color:var(--ink-2); border:1px solid var(--line); padding:6px 12px; border-radius:99px}
+.narrative{font-size:1.02rem; color:var(--ink-2); max-width:66ch; margin-top:22px}
+.powers{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1px; background:var(--line-soft); border:1px solid var(--line-soft); margin-top:30px}
+.power{background:var(--surface); padding:20px}
+.power .lbl{font-family:var(--f-mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3)}
+.power h4{margin:8px 0 6px; font-family:var(--f-display); font-size:1.12rem; font-weight:600; font-variation-settings:'opsz' 24,'WONK' 1; line-height:1.2}
+.power p{font-size:14px; color:var(--ink-2)}
+.power.up{box-shadow:inset 3px 0 0 var(--bear)}
+.power.down{box-shadow:inset 3px 0 0 var(--lion)}
+
+.legend{display:grid; grid-template-columns:repeat(auto-fill,minmax(228px,1fr)); gap:10px 22px; margin-top:22px}
+.leg{display:flex; gap:10px; align-items:baseline; font-size:13.5px; justify-content:space-between}
+.leg .sw{width:10px; height:10px; border-radius:2px; flex:none; transform:translateY(1px)}
+.leg .lt{flex:1}
+.leg .lv{font-family:var(--f-mono); font-size:11.5px; color:var(--ink-3); font-variant-numeric:tabular-nums}
+
+.windows{display:grid; grid-template-columns:repeat(auto-fit,minmax(232px,1fr)); gap:1px; background:var(--line-soft); border:1px solid var(--line-soft); margin-top:24px}
+.win{background:var(--surface); padding:18px}
+.win .wt{display:flex; justify-content:space-between; align-items:baseline; gap:10px}
+.win .wn{font-family:var(--f-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3)}
+.win .wv{font-family:var(--f-mono); font-size:15px; font-weight:500; margin-top:6px; font-variant-numeric:tabular-nums}
+.win .wi{font-size:13px; color:var(--ink-2); margin-top:8px}
+.win.contra .wv{color:var(--lion)}
+
+.cta-block{padding:clamp(26px,4vw,42px); border-top:1px solid var(--line-soft); background:var(--surface-2)}
+.cta-block h3{font-size:clamp(1.45rem,3vw,2rem); font-weight:600; margin-bottom:10px}
+.cta-block p{color:var(--ink-2); max-width:54ch; margin-bottom:22px}
+.gp{display:inline-flex; align-items:center; gap:12px; background:var(--ink); color:var(--ground); padding:12px 22px 12px 18px; border-radius:3px; text-decoration:none; transition:opacity .15s ease}
+.gp:hover{opacity:.86}
+.gp .gtxt{display:flex; flex-direction:column; line-height:1.15}
+.gp .g1{font-size:10px; letter-spacing:.1em; text-transform:uppercase; opacity:.75}
+.gp .g2{font-size:17px; font-weight:600; font-family:var(--f-display); font-variation-settings:'opsz' 20}
+
+footer{border-top:1px solid var(--line-soft); padding:40px 0 56px; color:var(--ink-3); font-size:13px}
+footer .frow{display:flex; flex-wrap:wrap; gap:18px; justify-content:space-between; align-items:baseline}
+footer a{color:var(--ink-2)}
+
+/* ---------- app presence: buttons, badges ---------- */
+.mnav{display:flex; align-items:center; gap:16px}
+.btn-sm{padding:9px 15px; font-size:13.5px}
+.btn-play{background:transparent; color:var(--ink); border-color:var(--line)}
+.btn-play:hover{border-color:var(--accent); color:var(--accent)}
+.gpi{width:19px; height:21px; flex:none}
+.gp .gpi{width:21px; height:23px}
+.gp-sm{padding:10px 18px 10px 15px}
+.gp-sm .g2{font-size:15px}
+.gp-sm .gpi{width:17px; height:19px}
+
+/* ---------- app section ---------- */
+.app-grid{display:grid; grid-template-columns:minmax(0,1fr); gap:44px; align-items:center}
+@media(min-width:900px){.app-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:64px}}
+.app-h{font-size:clamp(1.75rem,3.6vw,2.5rem); font-weight:600; margin:12px 0 0}
+.app-lede{margin-top:16px; color:var(--ink-2); max-width:56ch}
+.feat{display:flex; flex-direction:column; margin:28px 0 30px; border-top:1px solid var(--line-soft)}
+.feat .f{display:flex; gap:16px; padding:16px 0; border-bottom:1px solid var(--line-soft)}
+.feat .fk{font-size:11px; color:var(--ink-3); flex:none; width:24px; padding-top:3px}
+.feat b{font-size:15px; font-weight:600; display:block}
+.feat p{font-size:14px; color:var(--ink-2); margin-top:3px}
+
+.phonewrap{display:flex; justify-content:center}
+.phone{
+  width:min(300px,80vw); aspect-ratio:9/18.5; border-radius:34px; padding:9px;
+  background:linear-gradient(160deg,var(--surface-2),var(--sunk));
+  border:1px solid var(--line); box-shadow:var(--shadow); flex:none;
+}
+.pscreen{
+  width:100%; height:100%; border-radius:26px; background:var(--surface);
+  border:1px solid var(--line-soft); overflow:hidden; padding:20px 16px;
+  display:flex; flex-direction:column; gap:12px;
+}
+.pshead{display:flex; justify-content:space-between; align-items:baseline; gap:8px}
+.pshead .pt{font-family:var(--f-display); font-variation-settings:'opsz' 20,'WONK' 1; font-size:17px; font-weight:600}
+.pshead .pd{font-family:var(--f-mono); font-size:9.5px; letter-spacing:.1em; color:var(--ink-3); text-transform:uppercase}
+.psnow{background:var(--glow); border-left:2px solid var(--accent); padding:9px 11px; border-radius:2px}
+.psnow .pl{font-family:var(--f-mono); font-size:8.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent)}
+.psnow .pv{font-size:13.5px; font-weight:600; margin-top:2px; line-height:1.25}
+.pslist{display:flex; flex-direction:column; gap:0; margin-top:2px; overflow:hidden}
+.psask{margin-top:auto; display:flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:99px; padding:9px 13px; color:var(--ink-3); font-size:11.5px}
+.psask .pb{width:16px; height:16px; border-radius:50%; background:var(--accent); flex:none}
+.psrow{display:flex; gap:9px; align-items:flex-start; padding:8px 0; border-top:1px solid var(--line-soft)}
+.psrow .pw{width:9px; height:9px; border-radius:2px; flex:none; margin-top:4px}
+.psrow .px{flex:1; min-width:0}
+.psrow .pn{display:block; font-size:12px; font-weight:500; line-height:1.3; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.psrow .pm{display:block; margin-top:1px; font-family:var(--f-mono); font-size:9.5px; color:var(--ink-3); font-variant-numeric:tabular-nums}
+
+/* ---------- install dock (phones) ---------- */
+.dock{
+  position:fixed; left:0; right:0; bottom:0; z-index:30;
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:11px 18px calc(11px + env(safe-area-inset-bottom,0px));
+  background:color-mix(in srgb, var(--surface) 96%, transparent);
+  backdrop-filter:blur(14px); border-top:1px solid var(--line);
+  box-shadow:0 -8px 28px -14px rgba(0,0,0,.4);
+  animation:dockin .28s cubic-bezier(.4,0,.2,1) both;
+}
+@keyframes dockin{from{transform:translateY(100%)} to{transform:none}}
+.dockinfo{display:flex; align-items:center; gap:10px; min-width:0}
+.dockinfo .dot{width:9px; height:9px; border-radius:50%; background:var(--accent); flex:none; box-shadow:0 0 0 3px var(--glow)}
+.dockinfo b{font-family:var(--f-display); font-variation-settings:'opsz' 20,'WONK' 1; font-size:16px; display:block; line-height:1.15}
+.dockinfo .ds{font-family:var(--f-mono); font-size:10px; letter-spacing:.06em; color:var(--ink-3)}
+body.docked{padding-bottom:74px}
+@media(min-width:861px){.dock{display:none !important} body.docked{padding-bottom:0}}
+
+/* ---------- phone layout ---------- */
+@media(max-width:640px){
+  .wrap{padding:0 18px}
+  .hero{padding:40px 0 4px}
+  .section{padding:52px 0 44px}
+  .hero-cta{gap:10px}
+  .hero-cta .btn, .hero-cta .gp{width:100%; justify-content:center}
+  .hero .lede{font-size:1rem}
+  .masthead .wrap{height:56px}
+  .hide-sm{display:none}
+  .arcpanel{padding:16px 14px 14px}
+  .card-pad{padding:22px 18px}
+  .opt{padding:14px 14px; font-size:14.5px}
+  .qmeta{margin-bottom:16px}
+  .legend{grid-template-columns:1fr}
+  .brand{font-size:18px}
+  .result-hero h2{font-size:clamp(2.4rem,13vw,3.4rem)}
+  .cta-block .gp{width:100%; justify-content:center}
+}
+@media(max-width:400px){
+  .btn-sm{padding:8px 12px; font-size:12.5px}
+  .brand{font-size:17px}
+}
+
+/* ---------- live "you are here" strip ---------- */
+.nowbar{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  padding:14px clamp(26px,4vw,44px); background:var(--surface-2);
+  border-bottom:1px solid var(--line-soft); font-size:14px;
+}
+.nowdot{width:10px; height:10px; border-radius:50%; flex:none; box-shadow:0 0 0 3px color-mix(in srgb, var(--ground) 60%, transparent)}
+.nowclock{font-size:13px; color:var(--ink-2); letter-spacing:.04em; flex:none}
+.nowtext{color:var(--ink-2); flex:1; min-width:210px}
+.nowtext b{color:var(--ink); font-weight:600}
+.nowmark{position:absolute; top:-4px; bottom:-4px; width:2px; z-index:3; background:var(--ink);
+  box-shadow:0 0 0 1px color-mix(in srgb, var(--surface) 70%, transparent)}
+.nowmark::before{content:""; position:absolute; top:0; left:50%; transform:translateX(-50%);
+  border-left:4px solid transparent; border-right:4px solid transparent; border-top:5px solid var(--ink)}
+
+/* ---------- the workday verdict: the one big number on the page ---------- */
+.fitbox{display:flex; flex-wrap:wrap; gap:20px 30px; align-items:center; margin-top:14px;
+  padding:24px 26px; background:var(--surface-2); border-left:3px solid var(--tc); border-radius:2px}
+.fitnum{display:flex; flex-direction:column; gap:3px; flex:none}
+.fbig{font-size:clamp(2.8rem,7vw,3.9rem); line-height:.9; font-weight:500; color:var(--tc); letter-spacing:-.03em}
+.fof{font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.fittext{flex:1; min-width:250px}
+.fitlabel{font-family:var(--f-mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); margin-bottom:6px}
+.fittext p{font-size:14.5px; color:var(--ink-2)}
+
+/* ---------- borderline honesty, and the kryptonite handoff ---------- */
+.edge{margin-top:16px; max-width:62ch; font-size:13.5px; color:var(--ink-2); border-left:2px solid var(--line); padding-left:14px}
+.fixline{margin-top:12px; padding-top:11px; border-top:1px dashed var(--line-soft); font-size:13.5px; color:var(--ink-2); display:flex; gap:8px}
+.fixarrow{color:var(--accent); flex:none; font-weight:600}
+.win .wt{align-items:center}
+.win .avoid{font-family:var(--f-mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--lion); border:1px solid var(--lion); border-radius:99px; padding:1px 7px; flex:none}
+.ctarow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+
+/* ---------- the reveal ---------- */
+.rv{animation:rise .5s cubic-bezier(.2,.7,.3,1) both}
+.rv1{animation-delay:.02s} .rv2{animation-delay:.10s} .rv3{animation-delay:.20s} .rv4{animation-delay:.30s}
+@keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+@media (prefers-reduced-motion:reduce){.rv{animation:none}}
+
+@media(max-width:640px){
+  .nowbar{padding:12px 18px; gap:9px}
+  .fitbox{padding:20px 18px; gap:16px}
+  .ctarow .gp, .ctarow .btn{width:100%; justify-content:center}
+}
+
+.hidden{display:none !important}
+.fade{animation:fade .32s cubic-bezier(.4,0,.2,1) both}
+@keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="dot"></span>Cyrca</a>
+    <nav class="mnav">
+      <a class="mlink hide-sm" href="#quiz">Take the test</a>
+      <a class="btn btn-play btn-sm" id="mastheadPlay" target="_blank" rel="noopener">Get the app</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Cyrca for Android &middot; Chronotype assessment &middot; 4 minutes</p>
+        <h1>Your body already picked your best hours. <em>Nobody told you which.</em></h1>
+        <p class="lede">Peak focus is not a habit you build — it is a window your biology opens once a day and closes again. It opens at 07:30 for a Lion and 15:30 for a Wolf. Take the same assessment built into Cyrca and find out where yours sits.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="#quiz">Take the free test</a>
+          <a class="gp gp-sm" id="heroPlay" target="_blank" rel="noopener">
+            <svg viewBox="0 0 512 512" aria-hidden="true" class="gpi"><path fill="#4285F4" d="M47 27c-4 6-6 14-6 24v410c0 10 2 18 6 24l254-229L47 27z"/><path fill="#34A853" d="M301 256L47 485c9 9 24 10 40 1l299-170-85-60z"/><path fill="#FBBC04" d="M386 316l99-56c25-14 25-46 0-60l-99-56-85 112 85 60z"/><path fill="#EA4335" d="M87 26c-16-9-31-8-40 1l254 229 85-60L87 26z"/></svg>
+            <span class="gtxt"><span class="g1">Get it on</span><span class="g2">Google Play</span></span>
+          </a>
+        </div>
+        <p class="trust">Free to download &middot; No sign-up for the test &middot; Result in 4 minutes</p>
+        <p style="margin-top:10px"><a class="mlink" href="#types">Meet the four chronotypes &darr;</a></p>
+      </div>
+      <div class="arcpanel">
+        <div class="arcpanel-head">
+          <p class="eyebrow">Peak focus window, by chronotype</p>
+        </div>
+        <div class="ruler"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
+        <div id="heroArcs"></div>
+        <div class="arcnote"><span class="swatch"></span><span>The saturated block is each type&rsquo;s deep-work window. Same 24 hours — eight hours apart.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="types">
+    <div class="section-head">
+      <p class="eyebrow">The four chronotypes</p>
+      <h2>Four clocks. One of them is yours.</h2>
+      <p>Chronotype is the timing of your circadian rhythm — when cortisol surges, when core temperature peaks, when melatonin is released. It is largely genetic, it barely shifts with willpower, and it decides when your best work is available to you.</p>
+    </div>
+    <div class="types" id="typeCards"></div>
+  </section>
+
+  <section class="section wrap" id="quiz">
+    <div class="section-head">
+      <p class="eyebrow" id="quizKicker">The assessment</p>
+      <h2 id="quizHead">Twenty questions, no email.</h2>
+    </div>
+    <div class="card">
+      <div class="progress"><div class="fill" id="pfill"></div></div>
+      <div id="quizBody"></div>
+    </div>
+  </section>
+  <section class="section wrap" id="app">
+    <div class="app-grid">
+      <div>
+        <p class="eyebrow">The app</p>
+        <h2 class="app-h">The test tells you when. Cyrca runs your day on it.</h2>
+        <p class="app-lede">Knowing your chronotype changes nothing by itself. Cyrca takes it and builds the actual schedule around it — then adapts when the day moves.</p>
+        <div class="feat">
+          <div class="f"><span class="fk mono">01</span><div><b>Chronotype-optimal windows</b><p>Every task lands in the window your biology can actually do it in — deep work at your cortisol peak, lifts at your temperature peak.</p></div></div>
+          <div class="f"><span class="fk mono">02</span><div><b>Plan My Day</b><p>Hand it your task list. It places each one on your arc and hands back a schedule you can keep.</p></div></div>
+          <div class="f"><span class="fk mono">03</span><div><b>AI Circadian Coach</b><p>Ask why you crash at 14:00, or push a meeting and let it reschedule the rest around your rhythm.</p></div></div>
+          <div class="f"><span class="fk mono">04</span><div><b>Smart alarm &amp; sleep tracking</b><p>Wake inside your lightest sleep stage, with a caffeine cut-off that protects tonight&rsquo;s sleep.</p></div></div>
+        </div>
+        <a class="gp" id="appPlay" target="_blank" rel="noopener">
+          <svg viewBox="0 0 512 512" aria-hidden="true" class="gpi"><path fill="#4285F4" d="M47 27c-4 6-6 14-6 24v410c0 10 2 18 6 24l254-229L47 27z"/><path fill="#34A853" d="M301 256L47 485c9 9 24 10 40 1l299-170-85-60z"/><path fill="#FBBC04" d="M386 316l99-56c25-14 25-46 0-60l-99-56-85 112 85 60z"/><path fill="#EA4335" d="M87 26c-16-9-31-8-40 1l254 229 85-60L87 26z"/></svg>
+          <span class="gtxt"><span class="g1">Get it on</span><span class="g2">Google Play</span></span>
+        </a>
+        <p class="trust" style="margin-top:14px">Free to download &middot; Pro features on a 3-day free trial</p>
+      </div>
+      <div class="phonewrap"><div class="phone"><div class="pscreen" id="pscreen"></div></div></div>
+    </div>
+  </section>
+</main>
+
+<div class="dock" id="dock" hidden>
+  <div class="dockinfo"><span class="dot"></span><div><b>Cyrca</b><span class="ds">Free on Google Play</span></div></div>
+  <a class="btn btn-primary btn-sm" id="dockPlay" target="_blank" rel="noopener">Install</a>
+</div>
+
+<footer>
+  <div class="wrap frow">
+    <div>
+      <p style="color:var(--ink-2)"><strong>Cyrca</strong> — the circadian productivity coach.</p>
+      <p style="margin-top:6px">Assessment adapted from the four-chronotype framework popularised by Dr. Michael Breus. Educational use — not a medical diagnosis or sleep-disorder screen.</p>
+    </div>
+    <p class="mono" style="font-size:11px; letter-spacing:.08em">&copy; <span id="yr"></span> CYRCA</p>
+  </div>
+</footer>
+
+<script>
+const DATA = {"chrono":{"LION":{"wake":"05:30","bed":"21:30","phases":[{"k":"ANS_WAKE_STABILIZATION","s":0,"e":120},{"k":"CAR_PLATEAU_HIGH_AROUSAL","s":120,"e":360},{"k":"POST_PEAK_LUNCH_WINDOW","s":360,"e":450},{"k":"ASYNCHRONY_ATTENUATED_INHIBITION","s":450,"e":570},{"k":"CBT_ACROPHASE_NEUROMUSCULAR_MAX","s":570,"e":810},{"k":"EVENING_WIND_DOWN","s":810,"e":900},{"k":"PARASYMPATHETIC_DOMINANCE_MELATONIN_RISE","s":900,"e":960}],"windows":{"Caffeine":{"s":90,"e":150,"contra":false,"insight":"Post-CAR decline window (07:00\u201308:00). Your natural cortisol is settling, allowing caffeine to intercept adenosine receptors cleanly."},"Nap":{"s":450,"e":510,"contra":false,"insight":"Process S crest (13:00\u201314:00). Keep limits strictly to 20 minutes to prevent slow-wave sleep disruption."},"Strength":{"s":570,"e":750,"contra":false,"insight":"Late-day core-temperature peak, maximal muscular power."},"Cardio":{"s":60,"e":120,"contra":false,"insight":"Morning cortisol surge drives aerobic efficiency and VO2 max."}}},"BEAR":{"wake":"07:00","bed":"23:00","phases":[{"k":"ANS_WAKE_STABILIZATION","s":0,"e":90},{"k":"MORNING_PRE_PEAK_LULL","s":90,"e":180},{"k":"CORTISOL_SLOPE_ZENITH","s":180,"e":420},{"k":"CIRCADIAN_TROUGH_POST_PRANDIAL","s":420,"e":540},{"k":"CBT_ACROPHASE_NEUROMUSCULAR_MAX","s":540,"e":780},{"k":"ASYNCHRONY_ATTENUATED_INHIBITION","s":780,"e":900},{"k":"EVENING_WIND_DOWN","s":900,"e":960}],"windows":{"Caffeine":{"s":90,"e":150,"contra":false,"insight":"Cortisol stabilization window (08:30\u201309:30). Ride the morning baseline wave, then fuel up right before your deep work block."},"Nap":{"s":420,"e":450,"contra":false,"insight":"Solar core post-prandial trough (14:00\u201314:30). Utilize the caffeine-nap strategy for maximum cognitive performance."},"Strength":{"s":540,"e":720,"contra":false,"insight":"Diurnal temperature crest, peak force output."},"Cardio":{"s":540,"e":720,"contra":false,"insight":"Afternoon aerobic window; body warm and metabolically primed."}}},"WOLF":{"wake":"08:30","bed":"00:30","phases":[{"k":"ANS_WAKE_STABILIZATION","s":0,"e":60},{"k":"ASYNCHRONY_ATTENUATED_INHIBITION","s":60,"e":180},{"k":"MORNING_PRE_PEAK_LULL","s":180,"e":420},{"k":"DELAYED_CIRCADIAN_PEAK","s":420,"e":660},{"k":"CBT_ACROPHASE_NEUROMUSCULAR_MAX","s":660,"e":720},{"k":"EVENING_CREATIVE_FLOW","s":720,"e":930},{"k":"PARASYMPATHETIC_DOMINANCE_MELATONIN_RISE","s":930,"e":960}],"windows":{"Caffeine":{"s":120,"e":180,"contra":false,"insight":"Delayed CAR curve clearance (10:30\u201311:30). Do not ingest early, or you will experience rapid compound stimulant tolerance."},"Nap":{"s":0,"e":0,"contra":true,"insight":"Biologically Contraindicated. Midday naps destroy the homeostatic sleep pressure loop needed to combat midnight sleep latency issues."},"Cardio":{"s":570,"e":660,"contra":false,"insight":"Evening aerobic only, morning runs spike perceived exertion for Wolves."},"Strength":{"s":630,"e":720,"contra":false,"insight":"Delayed core-temperature peak, your strongest lift is the evening."}}},"DOLPHIN":{"wake":"06:30","bed":"23:30","phases":[{"k":"ANS_WAKE_STABILIZATION","s":0,"e":120},{"k":"MORNING_PRE_PEAK_LULL","s":120,"e":210},{"k":"CORTISOL_SLOPE_ZENITH","s":210,"e":360},{"k":"POST_PEAK_LUNCH_WINDOW","s":360,"e":450},{"k":"CIRCADIAN_TROUGH_POST_PRANDIAL","s":450,"e":630},{"k":"CORTISOL_ANXIETY_STABILIZATION","s":630,"e":750},{"k":"ASYNCHRONY_ATTENUATED_INHIBITION","s":750,"e":900},{"k":"EVENING_WIND_DOWN","s":900,"e":1020}],"windows":{"Caffeine":{"s":120,"e":180,"contra":false,"insight":"Extreme adenosine sensitivity. Use half-decaffeinated protocols and observe an aggressive, early cutoff strategy."},"Nap":{"s":0,"e":0,"contra":true,"insight":"Strictly Prohibited. You must maximize accumulated day sleep pressure exclusively to stabilize erratic nocturnal sleep latency patterns."},"Strength":{"s":0,"e":60,"contra":false,"insight":"Train on waking to blunt excess cortisol and ground the nervous system."},"Cardio":{"s":60,"e":120,"contra":false,"insight":"Early aerobic work; keep it before midday to protect sleep."}}}},"phaseMeta":{"ANS_WAKE_STABILIZATION":{"n":"Waking Up","c":"#94A3B8"},"CAR_PLATEAU_HIGH_AROUSAL":{"n":"Peak Focus","c":"#EF4444"},"CORTISOL_SLOPE_ZENITH":{"n":"Peak Focus","c":"#F97316"},"CIRCADIAN_TROUGH_POST_PRANDIAL":{"n":"Afternoon Dip","c":"#0EA5E9"},"PROCESS_S_C_MAX_DIVERGENCE":{"n":"Afternoon Dip","c":"#6366F1"},"METABOLIC_RESPIRATORY_EFFICIENCY":{"n":"Cardio Sweet Spot","c":"#34D399"},"CBT_ACROPHASE_NEUROMUSCULAR_MAX":{"n":"Peak Strength","c":"#10B981"},"ASYNCHRONY_ATTENUATED_INHIBITION":{"n":"Creative Window","c":"#8B5CF6"},"DELAYED_CIRCADIAN_PEAK":{"n":"Peak Focus","c":"#D946EF"},"CORTISOL_ANXIETY_STABILIZATION":{"n":"Secondary Focus","c":"#F59E0B"},"MORNING_PRE_PEAK_LULL":{"n":"Slow Start","c":"#38BDF8"},"EVENING_WIND_DOWN":{"n":"Evening Wind-Down","c":"#A855F7"},"POST_PEAK_LUNCH_WINDOW":{"n":"Lunch & Low-Stakes Tasks","c":"#FB923C"},"PARASYMPATHETIC_DOMINANCE_MELATONIN_RISE":{"n":"Deep Sleep Prep","c":"#312E81"},"EVENING_CREATIVE_FLOW":{"n":"Evening Creative","c":"#A78BFA"}},"part1":["The slightest sound or light can keep me awake or wake me up.","Food is not a great passion for me.","I usually wake up before my alarm rings.","I can't sleep well on planes, even with an eye mask and earplugs.","I'm often irritable due to fatigue.","I worry inordinately about small details.","I have been diagnosed by a doctor or self-diagnosed as an insomniac.","In school, I was anxious about my grades.","I lose sleep ruminating about what happened in the past and what might happen in the future.","I'm a perfectionist."],"part2":[{"q":"If you had nothing to do the next day and gave yourself permission to sleep in as long as you like, when would you wake up?","o":[{"t":"Before 6:30 a.m.","v":1},{"t":"Between 6:30 a.m. and 8:45 a.m.","v":2},{"t":"After 8:45 a.m.","v":3}]},{"q":"When you have to get out of bed by a certain time, do you use an alarm clock?","o":[{"t":"No need. You wake up on your own at just the right time.","v":1},{"t":"Yes to the alarm, with no snooze or one snooze.","v":2},{"t":"Yes to the alarm, with a backup alarm, and multiple snoozes.","v":3}]},{"q":"When do you wake up on the weekends?","o":[{"t":"The same time as your workweek schedule.","v":1},{"t":"Within 45 to 90 minutes of your workweek schedule.","v":2},{"t":"90 minutes or more past your workweek schedule.","v":3}]},{"q":"How do you experience jet lag?","o":[{"t":"You struggle with it, no matter what.","v":1},{"t":"You adjust within 48 hours.","v":2},{"t":"You adjust quickly, especially when traveling west (where you gain time).","v":3},{"t":"You've never traveled far enough to know.","v":0}]},{"q":"What's your favorite meal? (Think time of day more than the menu.)","o":[{"t":"Breakfast","v":1},{"t":"Lunch","v":2},{"t":"Dinner","v":3}]},{"q":"If you were to flash back to your school days and take a big, important exam again, when would you prefer to start the test for maximum focus and concentration?","o":[{"t":"Early morning.","v":1},{"t":"Early afternoon.","v":2},{"t":"Midafternoon.","v":3}]},{"q":"If you could choose any time of day to do an intense workout, when would you do it?","o":[{"t":"Before 8:00 a.m.","v":1},{"t":"Between 8:00 a.m. and 4:00 p.m.","v":2},{"t":"After 4:00 p.m.","v":3}]},{"q":"When are you most alert?","o":[{"t":"One to two hours post wake-up.","v":1},{"t":"Two to four hours post wake-up.","v":2},{"t":"Four to six hours post wake-up.","v":3}]},{"q":"If you could choose your own five-hour workday, which block of consecutive hours would you choose?","o":[{"t":"4:00 a.m. to 9:00 a.m.","v":1},{"t":"9:00 a.m. to 2:00 p.m.","v":2},{"t":"4:00 p.m. to 9:00 p.m.","v":3}]},{"q":"Do you consider yourself...","o":[{"t":"Future-thinking and strategic","v":1},{"t":"Grounded and practical","v":2},{"t":"Present-thinking and creative","v":3}]}],"rules":{"part1DolphinThreshold":7,"part2LionRange":[10,16],"part2BearRange":[17,23],"part2WolfRange":[24,50]}};
+
+const PLAY = "https://play.google.com/store/apps/details?id=com.aistudio.productivitycoach.plqmnz";
+const playLink = (src, content) =>
+  `${PLAY}&utm_source=chronotype_test&utm_medium=web&utm_campaign=${src}${content?"&utm_content="+content:""}`;
+
+const TYPES = {
+  LION:{name:"Lion", color:"var(--lion)", pop:"15–20% of people",
+    sub:"The Early-Morning Apex",
+    tease:"Awake before the alarm, sharpest before most people have opened a laptop.",
+    desc:"Lions represent 15–20% of the population, characterised by a massive, rapid cortisol surge immediately upon waking. Your biological clock is phase-advanced, granting you instant cognitive clarity and high baseline energy while the rest of the world is still sleeping.",
+    superT:"Unmatched Morning Execution", superD:"Highest early prefrontal cortex activation.",
+    kryptT:"The 2:00 PM Crash", kryptD:"Severe early afternoon adenosine saturation.",
+    fix:"Cyrca parks admin and low-stakes work inside the crash, and defends 07:30–11:30 for the work that actually matters.",
+    ctaH:"Your 2 PM crash is not a discipline problem.", ctaB:"It is adenosine, and it arrives on schedule. Cyrca builds your day so the crash lands on your inbox instead of your most important work — and puts deep work back where your brain can still do it."},
+  BEAR:{name:"Bear", color:"var(--bear)", pop:"50–55% of people",
+    sub:"The Solar-Aligned Engine",
+    tease:"Rises and falls with the sun. The schedule the working world was built around.",
+    desc:"Bears make up the majority of the population (50–55%) and possess a robust circadian rhythm synchronised perfectly with the solar cycle. Your metabolic and cognitive curves are standard, making you highly adaptable to traditional societal schedules, though you are susceptible to distinct afternoon lulls.",
+    superT:"Sustained Daytime Endurance", superD:"Highly adaptable and steady metabolic curve.",
+    kryptT:"Social Jetlag", kryptD:"Severe vulnerability to weekend schedule shifts.",
+    fix:"Cyrca holds one anchor wake time across the whole week, so Monday does not open with a two-hour deficit.",
+    ctaH:"Your weekends are quietly undoing your weekdays.", ctaB:"Two hours of Saturday lie-in shifts your clock, and Monday morning pays for it. Cyrca keeps your wake time stable and schedules around the dip that arrives every afternoon at 14:00."},
+  WOLF:{name:"Wolf", color:"var(--wolf)", pop:"15–20% of people",
+    sub:"The Delayed-Phase Architect",
+    tease:"Mornings are a tax. The best ideas arrive after everyone else has logged off.",
+    desc:"Wolves account for 15–20% of the population and are driven by a delayed central pacemaker. Because your melatonin onset happens much later, society constantly forces you to wake before your sleep cycle is finished. However, when allowed to follow your natural rhythm, your late-stage cognitive engine is unparalleled.",
+    superT:"Late-Night Divergent Brilliance", superD:"Peak creative ideation when others are asleep.",
+    kryptT:"Extreme Morning Sleep Inertia", kryptD:"Prolonged neurobehavioural sluggishness upon waking.",
+    fix:"Cyrca stops putting anything that needs your brain before 11:30, and defends the 15:30–19:30 window you actually think in.",
+    ctaH:"You lose most of your best hours to a schedule built for Lions.", ctaB:"Your peak focus opens at 15:30 — ninety minutes before the workday ends. Cyrca moves the work that matters into the hours you actually have, instead of a morning you were never going to win."},
+  DOLPHIN:{name:"Dolphin", color:"var(--dolphin)", pop:"~10% of people",
+    sub:"The High-Alert Intellect",
+    tease:"Light sleeper, busy mind — and capable of ferociously precise bursts of focus.",
+    desc:"Dolphins are the most fragile and neurologically complex chronotype, making up only 10% of the population. Your central nervous system is incredibly hyper-vigilant, making you prone to fragmented sleep architecture. Because of this, your brain acts as a precision reactor capable of deep, intense sprint-burst focus, provided you strictly manage your environmental stimuli.",
+    superT:"Precision Sprint Focus", superD:"Intense, narrow windows of high-clarity processing.",
+    kryptT:"Nocturnal Hyper-arousal", kryptD:"Adrenaline spikes during the night and early morning.",
+    fix:"Cyrca protects the narrow windows you can genuinely hold, and winds the evening down before your mind starts racing.",
+    ctaH:"A busy mind is not a character flaw.", ctaB:"Your nervous system runs hot, so focus arrives in short precise bursts rather than long stretches. Cyrca finds those bursts, protects them, and keeps the evening clear of anything that will keep you up."}
+};
+const ORDER = ["LION","BEAR","DOLPHIN","WOLF"];
+const PEAK_KEYS = ["CAR_PLATEAU_HIGH_AROUSAL","CORTISOL_SLOPE_ZENITH","DELAYED_CIRCADIAN_PEAK"];
+
+/* ---------- time helpers ---------- */
+const toMins = s => { const [h,m] = s.split(":").map(Number); return h*60+m; };
+const fmt = m => { m=((m%1440)+1440)%1440; return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0"); };
+const segments = (a,b) => a===b ? [] : (b>a ? [[a,b]] : [[a,1440],[0,b]]);
+
+function bands(key, opts){
+  const c = DATA.chrono[key], wake = toMins(c.wake), out = [];
+  for(const p of c.phases){
+    const meta = DATA.phaseMeta[p.k] || {n:p.k, c:"#888"};
+    const isPeak = PEAK_KEYS.includes(p.k);
+    if(opts && opts.peakOnly && !isPeak) continue;
+    for(const [s,e] of segments((wake+p.s)%1440, (wake+p.e)%1440)){
+      out.push(`<div class="band${isPeak?" peak":""}" style="left:${s/14.4}%;width:${(e-s)/14.4}%;background:${meta.c}"></div>`);
+    }
+  }
+  return out.join("");
+}
+function peakWindow(key){
+  const c = DATA.chrono[key], wake = toMins(c.wake);
+  const p = c.phases.find(x => PEAK_KEYS.includes(x.k));
+  return p ? fmt(wake+p.s)+"–"+fmt(wake+p.e) : "";
+}
+
+/* ---------- hero ---------- */
+document.getElementById("heroArcs").innerHTML = ORDER.map(k => `
+  <div class="arcrow">
+    <div class="who" style="color:${TYPES[k].color}">${TYPES[k].name}</div>
+    <div class="track">${bands(k)}</div>
+    <div class="peaktime">${peakWindow(k)}</div>
+  </div>`).join("");
+
+document.getElementById("typeCards").innerHTML = ORDER.map(k => {
+  const t = TYPES[k], c = DATA.chrono[k];
+  return `<article class="type" style="--tc:${t.color}">
+    <div class="rail"></div>
+    <h3>${t.name}</h3>
+    <p class="eyebrow" style="color:${t.color}">${t.sub}</p>
+    <p class="sub">${t.tease}</p>
+    <div class="stats">
+      <span><b>${t.pop}</b></span>
+      <span>Wakes <b>${c.wake}</b> &middot; Sleeps <b>${c.bed}</b></span>
+      <span>Deep work <b>${peakWindow(k)}</b></span>
+    </div>
+  </article>`;
+}).join("");
+
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+/* ---------- quiz state ---------- */
+const P1 = DATA.part1, P2 = DATA.part2, TOTAL = P1.length + P2.length;
+const a1 = new Array(P1.length).fill(null);
+const a2 = new Array(P2.length).fill(null);
+let step = -1; // -1 intro, 0..9 part1, 10..19 part2, 20 result
+const body = document.getElementById("quizBody");
+const pfill = document.getElementById("pfill");
+
+const CATS = ["Sensory sensitivity","Sensory sensitivity","Sleep inertia & racing mind","Sleep inertia & racing mind",
+  "Baseline nervous system","Baseline nervous system","Restoration quality","Baseline nervous system",
+  "Sleep inertia & racing mind","Baseline nervous system"];
+
+function render(){
+  pfill.style.width = (step < 0 ? 0 : Math.min(step,TOTAL)/TOTAL*100) + "%";
+  if(step < 0) return renderIntro();
+  if(step < P1.length) return renderP1();
+  if(step < TOTAL) return renderP2();
+  renderResult();
+}
+
+function renderIntro(){
+  body.innerHTML = `<div class="card-pad fade">
+    <p class="eyebrow">Before you start</p>
+    <h2 class="intro-title">Answer honestly about the life you actually live.</h2>
+    <p class="intro-body">Not the schedule you keep for work — the one you would fall into on a week with no obligations. That is the schedule your biology is asking for.</p>
+    <div class="steps">
+      <div class="step"><span class="n mono">01</span><div><div class="t">Part one &middot; 10 statements</div><div class="d">True or false. These screen for a hyper-vigilant nervous system.</div></div></div>
+      <div class="step"><span class="n mono">02</span><div><div class="t">Part two &middot; 10 questions</div><div class="d">Sleep timing preference — where your day naturally sits.</div></div></div>
+      <div class="step"><span class="n mono">03</span><div><div class="t">Your result</div><div class="d">Your chronotype, your daily arc with real clock times, and what to do with it.</div></div></div>
+    </div>
+    <button class="btn btn-primary btn-lg" id="begin">Begin the assessment</button>
+  </div>`;
+  document.getElementById("begin").onclick = () => { step = 0; render(); focusCard(); };
+}
+
+function shell(cat, n, question, optsHtml){
+  return `<div class="card-pad fade">
+    <div class="qmeta">
+      <span class="qcat">${cat}</span>
+      <span class="qnum">${String(n).padStart(2,"0")} / ${TOTAL}</span>
+    </div>
+    <p class="qtext">${question}</p>
+    <div class="opts">${optsHtml}</div>
+    <div class="qfoot">
+      <button class="linkbtn" id="back">&larr; Back</button>
+      <span class="qnum">${n <= P1.length ? "Part 1 — nervous system" : "Part 2 — sleep timing"}</span>
+    </div>
+  </div>`;
+}
+
+function renderP1(){
+  const i = step, cur = a1[i];
+  const choices = [[true,"This sounds like me."],[false,"This is not me."]];
+  body.innerHTML = shell(CATS[i], i+1, P1[i], choices.map(([v,label],k) =>
+    `<button class="opt${cur===v?" sel":""}" data-v="${v}"><span class="key">${k===0?"Y":"N"}</span>${label}</button>`).join(""));
+  bindOpts(el => { a1[i] = el.dataset.v === "true"; });
+}
+
+function renderP2(){
+  const i = step - P1.length, q = P2[i], cur = a2[i];
+  body.innerHTML = shell("Sleep timing preference", step+1, q.q, q.o.map((o,k) =>
+    `<button class="opt${cur===k+1?" sel":""}" data-v="${k+1}"><span class="key">${String.fromCharCode(65+k)}</span>${o.t}</button>`).join(""));
+  bindOpts(el => { a2[i] = Number(el.dataset.v); });
+}
+
+function bindOpts(set){
+  body.querySelectorAll(".opt").forEach(el => el.onclick = () => {
+    set(el);
+    body.querySelectorAll(".opt").forEach(o => o.classList.remove("sel"));
+    el.classList.add("sel");
+    setTimeout(() => { step++; render(); }, 170);
+  });
+  const back = document.getElementById("back");
+  back.disabled = step === 0;
+  back.onclick = () => { if(step > 0){ step--; render(); } };
+}
+
+function focusCard(){
+  const y = document.getElementById("quiz").getBoundingClientRect().top + window.scrollY - 68;
+  window.scrollTo({top:y, behavior:"smooth"});
+}
+
+/* ---------- scoring — mirrors ChronotypeQuizScorer.kt ---------- */
+function score(){ return evaluate().key; }
+
+/* Same funnel as the Kotlin, but it also reports the prorated score, so the result
+   can be honest when the call landed a fraction of a point from the next class. */
+function evaluate(){
+  const trues = a1.filter(x => x === true).length;
+  const thr = DATA.rules.part1DolphinThreshold;
+  if(trues >= thr){
+    return {key:"DOLPHIN", note: trues === thr
+      ? "You cleared the Dolphin screen by a single answer. If your sleep settles, you may sit closer to another type."
+      : null};
+  }
+  const lionMax = DATA.rules.part2LionRange[1], bearMax = DATA.rules.part2BearRange[1];
+  let sum = 0, answered = 0;
+  a2.forEach((sel,i) => {
+    if(sel == null) return;
+    const opt = P2[i].o[sel-1];
+    if(!opt || opt.v <= 0) return;          // unscored option leaves BOTH numerator and denominator
+    sum += opt.v; answered++;
+  });
+  if(answered === 0) return {key:"BEAR", note:null};
+
+  const scaled = sum * P2.length;           // prorate to full-length scale, cross-multiplied
+  const key = scaled <= lionMax * answered ? "LION"
+            : scaled <= bearMax * answered ? "BEAR" : "WOLF";
+
+  const prorated = sum * P2.length / answered;
+  let note = null;
+  for(const e of [{at:lionMax + .5, low:"LION", high:"BEAR"}, {at:bearMax + .5, low:"BEAR", high:"WOLF"}]){
+    if(Math.abs(prorated - e.at) <= 1.2){
+      const other = key === e.low ? e.high : e.low;
+      note = "You scored " + prorated.toFixed(1) + " of 30, and the " + TYPES[other].name +
+             " boundary sits at " + e.at + ". You are genuinely on the line \u2014 worth reading the " +
+             TYPES[other].name + " profile too, and trusting whichever day sounds like yours.";
+      break;
+    }
+  }
+  return {key, prorated, note};
+}
+
+/* What a standard 09:00-17:00 does to their deep-work window. */
+function workdayFit(key){
+  const c = DATA.chrono[key], wake = toMins(c.wake);
+  const p = c.phases.find(x => PEAK_KEYS.includes(x.k));
+  const a = wake + p.s, b = wake + p.e;
+  const inside = Math.max(0, Math.min(b, 17*60) - Math.max(a, 9*60));
+  return {total:(b-a)/60, inside:inside/60, lost:(b-a-inside)/60, from:fmt(a), to:fmt(b)};
+}
+
+/* Where they are on their own arc at this minute. */
+function nowState(key){
+  const c = DATA.chrono[key], wake = toMins(c.wake);
+  const d = new Date(), nm = d.getHours()*60 + d.getMinutes();
+  let current = null;
+  for(const p of c.phases)
+    for(const [x,y] of segments((wake+p.s)%1440, (wake+p.e)%1440))
+      if(nm >= x && nm < y) current = DATA.phaseMeta[p.k] || {n:p.k, c:"#888"};
+  const peak = c.phases.find(x => PEAK_KEYS.includes(x.k));
+  const ps = (wake+peak.s)%1440, pe = (wake+peak.e)%1440;
+  return {nm, clock:fmt(nm), current,
+    inPeak: segments(ps,pe).some(([x,y]) => nm >= x && nm < y),
+    until:(ps - nm + 1440)%1440, peakStart:fmt(ps), peakEnd:fmt(pe), wake:c.wake};
+}
+const dur = m => { const h = Math.floor(m/60), r = m%60; return h ? (r ? h+"h "+r+"m" : h+"h") : r+"m"; };
+
+/* ---------- result ---------- */
+function renderResult(forced){
+  const ev = forced ? {key:forced, note:null} : evaluate();
+  const key = ev.key, t = TYPES[key], c = DATA.chrono[key], wake = toMins(c.wake);
+  const fit = workdayFit(key);
+
+  document.getElementById("quizKicker").textContent = "Assessment complete";
+  document.getElementById("quizHead").textContent = "Here is your clock.";
+  history.replaceState(null, "", "#result=" + key.toLowerCase());
+
+  const legend = c.phases.map(p => {
+    const m = DATA.phaseMeta[p.k] || {n:p.k, c:"#888"};
+    return `<div class="leg"><span class="sw" style="background:${m.c}"></span><span class="lt">${m.n}</span><span class="lv">${fmt(wake+p.s)}–${fmt(wake+p.e)}</span></div>`;
+  }).join("");
+
+  const WLABEL = {Caffeine:"Coffee window", Nap:"Nap window", Strength:"Strength training", Cardio:"Cardio"};
+  const wins = Object.entries(c.windows).map(([n,w]) => {
+    const contra = w.contra || w.s === w.e;
+    return `<div class="win${contra?" contra":""}">
+      <div class="wt"><span class="wn">${WLABEL[n]||n}</span>${contra?'<span class="avoid">Avoid</span>':''}</div>
+      <div class="wv">${contra ? "Not for you" : fmt(wake+w.s)+" – "+fmt(wake+w.e)}</div>
+      <p class="wi">${w.insight}</p>
+    </div>`;
+  }).join("");
+
+  const num = v => v % 1 ? v.toFixed(1) : String(v);
+  const fits = fit.lost < 0.25;
+  const fitPanel = `
+    <div class="fitbox">
+      <div class="fitnum">
+        <span class="fbig mono">${num(fit.inside)}</span>
+        <span class="fof mono">of ${num(fit.total)} peak hours</span>
+      </div>
+      <div class="fittext">
+        <p class="fitlabel">Inside a 9-to-5</p>
+        <p>${fits
+          ? `Your deep-work window runs ${fit.from}–${fit.to}, so all of it falls inside standard working hours. You are the type the workday was built around — which is why your real risk is not timing but consistency: ${key === "BEAR" ? "a shifted weekend costs you Monday." : "one fragmented night costs you the whole window."}`
+          : `Your deep-work window runs ${fit.from}–${fit.to}, so only ${dur(Math.round(fit.inside*60))} of it falls inside standard working hours. The other ${dur(Math.round(fit.lost*60))} — your sharpest thinking of the day — happens ${key === "WOLF" ? "after the workday has ended" : "before it has begun"}.`}</p>
+      </div>
+    </div>`;
+
+  body.innerHTML = `
+  <div class="fade" style="--tc:${t.color}">
+    <div class="result-hero">
+      <p class="kicker rv rv1">Your chronotype</p>
+      <h2 class="rv rv2">${t.name}</h2>
+      <p class="sub rv rv3">${t.sub}</p>
+      <div class="pop rv rv4"><span>${t.pop}</span></div>
+      ${ev.note ? `<p class="edge rv rv4">${ev.note}</p>` : ""}
+    </div>
+
+    <div class="nowbar" id="nowbar"></div>
+
+    <div class="card-pad">
+      <p class="narrative">${t.desc}</p>
+      <div class="powers">
+        <div class="power up"><p class="lbl">Superpower</p><h4>${t.superT}</h4><p>${t.superD}</p></div>
+        <div class="power down"><p class="lbl">Kryptonite</p><h4>${t.kryptT}</h4><p>${t.kryptD}</p>
+          <p class="fixline"><span class="fixarrow">&rarr;</span><span>${t.fix}</span></p></div>
+      </div>
+
+      <p class="eyebrow" style="margin-top:40px">What the standard workday costs you</p>
+      ${fitPanel}
+
+      <p class="eyebrow" style="margin-top:40px">Your biological day &middot; wake ${c.wake} &middot; sleep ${c.bed}</p>
+      <div class="ruler" style="--lbl:0px; margin:14px 0 6px"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
+      <div class="track full" style="height:34px">${bands(key)}<div class="nowmark" id="nowmark"></div></div>
+      <div class="legend">${legend}</div>
+
+      <p class="eyebrow" style="margin-top:40px">Your timing rules</p>
+      <div class="windows">${wins}</div>
+    </div>
+
+    <div class="cta-block">
+      <h3>${t.ctaH}</h3>
+      <p>${t.ctaB}</p>
+      <div class="ctarow">
+        <a class="gp" id="resultPlay" target="_blank" rel="noopener">
+          <svg viewBox="0 0 512 512" aria-hidden="true" class="gpi"><path fill="#4285F4" d="M47 27c-4 6-6 14-6 24v410c0 10 2 18 6 24l254-229L47 27z"/><path fill="#34A853" d="M301 256L47 485c9 9 24 10 40 1l299-170-85-60z"/><path fill="#FBBC04" d="M386 316l99-56c25-14 25-46 0-60l-99-56-85 112 85 60z"/><path fill="#EA4335" d="M87 26c-16-9-31-8-40 1l254 229 85-60L87 26z"/></svg>
+          <span class="gtxt"><span class="g1">Get it on</span><span class="g2">Google Play</span></span>
+        </a>
+        <button class="btn btn-ghost" id="shareBtn">Share my result</button>
+      </div>
+      <p style="margin-top:20px"><button class="linkbtn" id="retake">&larr; Retake the assessment</button></p>
+    </div>
+  </div>`;
+
+  document.getElementById("resultPlay").href = playLink("quiz_result", key);
+
+  document.getElementById("retake").onclick = () => {
+    document.getElementById("quizKicker").textContent = "The assessment";
+    document.getElementById("quizHead").textContent = "Twenty questions, no email.";
+    history.replaceState(null, "", location.pathname + location.search);
+    a1.fill(null); a2.fill(null); step = -1; render(); focusCard();
+  };
+
+  const share = document.getElementById("shareBtn");
+  share.onclick = async () => {
+    const text = `I'm a ${t.name} — ${t.sub}. Find your chronotype:`;
+    try{
+      if(navigator.share){ await navigator.share({title:"Cyrca Chronotype Test", text, url:location.href}); return; }
+      await navigator.clipboard.writeText(text + " " + location.href);
+      share.textContent = "Link copied";
+      setTimeout(() => { share.textContent = "Share my result"; }, 2200);
+    }catch(e){ /* dismissed or blocked: leave the button as it was */ }
+  };
+
+  paintNow(key);
+  clearInterval(window.__nowTimer);
+  window.__nowTimer = setInterval(() => paintNow(key), 60000);
+  focusCard();
+}
+
+/* The live half of the result: where they are on their own arc, this minute. */
+function paintNow(key){
+  const bar = document.getElementById("nowbar");
+  if(!bar) return;
+  const n = nowState(key);
+  const mark = document.getElementById("nowmark");
+  if(mark){ mark.style.left = (n.nm/14.4) + "%"; mark.title = "Now — " + n.clock; }
+
+  let headline, detail;
+  if(!n.current){
+    headline = "By your clock, you would be asleep.";
+    detail = `Your body wants to be up at ${n.wake}, and your peak focus opens at ${n.peakStart}.`;
+  } else if(n.inPeak){
+    headline = "You are in your peak focus window right now.";
+    detail = `It closes at ${n.peakEnd}. This is the best thinking you will get today.`;
+  } else {
+    headline = `Right now you are in your ${n.current.n.toLowerCase()}.`;
+    detail = `Peak focus opens at ${n.peakStart} — ${dur(n.until)} from now.`;
+  }
+  bar.innerHTML = `<span class="nowdot" style="background:${n.current ? n.current.c : "var(--sleep)"}"></span>` +
+    `<span class="nowclock mono">${n.clock}</span>` +
+    `<span class="nowtext"><b>${headline}</b> ${detail}</span>`;
+}
+
+const fromHash = (location.hash.match(/result=(lion|bear|wolf|dolphin)/i) || [])[1];
+if(fromHash){ step = TOTAL; renderResult(fromHash.toUpperCase()); } else render();
+
+/* ---------- app CTAs: every Play link tagged by where it was clicked ---------- */
+[["mastheadPlay","masthead"],["heroPlay","hero"],["appPlay","app_section"],["dockPlay","install_dock"]]
+  .forEach(([id,src]) => { const el = document.getElementById(id); if(el) el.href = playLink(src); });
+
+/* ---------- phone: a real Bear day, drawn from the same data ---------- */
+(function(){
+  const key = "BEAR", c = DATA.chrono[key], wake = toMins(c.wake);
+  const rows = c.phases.map(p => {
+    const m = DATA.phaseMeta[p.k] || {n:p.k, c:"#888"};
+    return {n:m.n, c:m.c, s:wake+p.s, e:wake+p.e};
+  });
+  const now = rows[2]; // Peak Focus
+  document.getElementById("pscreen").innerHTML = `
+    <div class="pshead"><span class="pt">Today</span><span class="pd">Bear &middot; day 12</span></div>
+    <div class="psnow">
+      <div class="pl">Now &middot; ${fmt(now.s)}–${fmt(now.e)}</div>
+      <div class="pv">Deep work: quarterly review</div>
+    </div>
+    <div class="pslist">${rows.map(r => `
+      <div class="psrow">
+        <span class="pw" style="background:${r.c}"></span>
+        <span class="px"><span class="pn">${r.n}</span><span class="pm">${fmt(r.s)}–${fmt(r.e)}</span></span>
+      </div>`).join("")}</div>
+    <div class="psask"><span class="pb"></span><span>Ask your coach&hellip;</span></div>`;
+})();
+
+/* ---------- install dock: visible once the hero scrolls away ---------- */
+(function(){
+  const dock = document.getElementById("dock");
+  let shown = false;
+  const sync = () => {
+    const want = window.scrollY > 420;
+    if(want === shown) return;
+    shown = want;
+    dock.hidden = !want;
+    document.body.classList.toggle("docked", want);
+  };
+  addEventListener("scroll", sync, {passive:true});
+  sync();
+})();
+</script>
